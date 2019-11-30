@@ -11,10 +11,10 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: dotnet publish -c Release -r win-x86 --self-contained -o $(Build.ArtifactStagingDirectory)
+- script: dotnet publish -c Release -r win-x86 -o $(Build.ArtifactStagingDirectory)
   displayName: 'publish x86'
 
-- script: dotnet publish -c Release -r win-x64 --self-contained -o $(Build.ArtifactStagingDirectory)
+- script: dotnet publish -c Release -r win-x64 -o $(Build.ArtifactStagingDirectory)
   displayName: 'publish x64'
 
 - task: PublishBuildArtifacts@1
