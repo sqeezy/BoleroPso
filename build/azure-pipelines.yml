@@ -11,8 +11,16 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: dotnet publish -c Release -o $(Build.ArtifactStagingDirectory)
+- script: dotnet publish -c Release -o $(Build.BinariesDirectory)
   displayName: 'publish'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.BinariesDirectory)'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
 
 - task: PublishBuildArtifacts@1
   inputs:
