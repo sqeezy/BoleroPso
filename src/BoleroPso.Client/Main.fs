@@ -4,28 +4,18 @@ open Elmish
 open Bolero
 open Bolero.Html
 open Bolero.Templating.Client
-open PSO
+open BoleroPso.Client.ExampleProblems
 
 type Model =
     {
         SelectedFunction : OptimizationProblem
+        Functions : OptimizationProblem list
     }
-
-let xSquaredProblem =
-  let xSquared (parameters:ParameterSet):Fitnesse = 
-    let p1 = Seq.item 0 parameters
-    p1*p1
-  {
-    Description = "x²"
-    Func = xSquared
-    InputRange = (0., 5.)
-    MaxVelocity=0.1
-    Dimension = 1
-  }
 
 let initModel =
     {
-        SelectedFunction = xSquaredProblem
+        Functions = exampleProblems
+        SelectedFunction = List.head exampleProblems
     }
 
 type Message =
@@ -39,8 +29,8 @@ let view model dispatch =
     div[] [
         h1 [] [text "Particle Swarm Optimizer"]
         hr []
-        p [] [text "Hello Azure"]
-        p [] [text model.SelectedFunction.Description]
+        forEach model.Functions <| fun f ->
+            p [] [text f.Description]
     ]
 
 type MyApp() =
