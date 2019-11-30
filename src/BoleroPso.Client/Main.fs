@@ -39,6 +39,7 @@ let view model dispatch =
     div[] [
         h1 [] [text "Particle Swarm Optimizer"]
         hr []
+        p [] [text "Hello Azure"]
         p [] [text model.SelectedFunction.Description]
     ]
 
