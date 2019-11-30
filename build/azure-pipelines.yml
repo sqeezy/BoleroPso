@@ -11,7 +11,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: dotnet publish -c Release -r win-x64 -o $(Build.BinariesDirectory)
+- script: dotnet publish -c Release -r win-x86 -o $(Build.BinariesDirectory)
   displayName: 'publish'
 
 - task: ArchiveFiles@2
