@@ -25,12 +25,23 @@ let update message model =
     match message with
     | Ping -> model
 
+let codeCol o =
+    div [attr.``class`` "column"] [
+        code [][textf "%A" o]
+    ]
+
 let view model dispatch =
     div[] [
         h1 [] [text "Particle Swarm Optimizer"]
         hr []
         forEach model.Functions <| fun f ->
-            p [] [text f.Description]
+            div [attr.``class`` "columns"] [
+                    f.Description |> codeCol
+                    f.Dimension |> codeCol
+                    f.Func |> codeCol
+                    f.InputRange |> codeCol
+                    f.MaxVelocity |> codeCol
+                ]
     ]
 
 type MyApp() =
