@@ -15,6 +15,6 @@
     <PackageReference Include="Bolero.HotReload" Version="0.10.4-preview9" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="3.0-preview9.*" />
     <PackageReference Include="Microsoft.AspNetCore.Blazor.DevServer" Version="3.0-preview9.*" />
-    <PackageReference Include="PSO" Version="0.1.9" />
+    <PackageReference Include="PSO" Version="0.1.12" />
   </ItemGroup>
 </Project>

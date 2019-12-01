@@ -1,5 +1,7 @@
 module BoleroPso.Client.ExampleProblems
 
+open PSO.Models
+
 let oneDimPolynoma =
   let xSquared (parameters:ParameterSet):Fitnesse = 
     let x = Seq.item 0 parameters
