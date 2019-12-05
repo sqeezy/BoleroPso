@@ -5,7 +5,7 @@ open Bolero
 open Bolero.Html
 open Bolero.Templating.Client
 open BoleroPso.Client.ExampleProblems
-open PSO.Models
+open PSO
 
 type Model =
     {
