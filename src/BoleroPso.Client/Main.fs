@@ -6,34 +6,46 @@ open Bolero.Html
 open Bolero.Templating.Client
 open BoleroPso.Client.ExampleProblems
 open PSO
+open PSO.SequentialOptimizer
 
 type Model =
     {
         SelectedFunction : OptimizationProblem
         Functions : OptimizationProblem list
+        LastSolution : Solution option
     }
 
 let initModel =
     {
         Functions = exampleProblems
         SelectedFunction = List.head exampleProblems
+        LastSolution = None
     }
 
 type Message =
-    | Ping
     | SelectProblem of OptimizationProblem
+    | StartOptimization
+
+let log s1 s2 = ()
+
+let testProblem problem =
+    let config = {MaxIterations=1000}
+    let solution = solve problem config log
+    solution
 
 let update message model =
     match message with
-    | Ping -> model
     | SelectProblem p -> {model with SelectedFunction = p}
+    | StartOptimization ->
+        let solution = testProblem model.SelectedFunction
+        {model with LastSolution = Some solution}
 
 let problemSelector model problem dispatch =
     label [attr.``class`` "radio"][
         input [
             attr.``type`` "radio"
             attr.``name`` "answer"
-            bind.checked (problem.Description=model.SelectedFunction.Description) (fun c -> dispatch (SelectProblem problem))
+            on.click (fun _ -> dispatch (SelectProblem problem))
         ]
     ]
 
@@ -60,13 +72,22 @@ let tableLayout model dispatch=
         ]
     ]
 
-
 let view model dispatch =
     div[] [
         h1 [] [text "Particle Swarm Optimizer"]
         hr []
         h2 [] [text "Predifined Problems"]
         tableLayout model dispatch
+        button [on.click (fun _ -> dispatch StartOptimization)] [
+            textf "Start Optimization %s" model.SelectedFunction.Description
+        ]
+        hr []
+        h2 [] [text "Last Solution"]
+        cond model.LastSolution.IsSome <| function
+        | false -> empty
+        | true -> 
+            let (parameters, fitnesse) = model.LastSolution.Value
+            label [] [textf "Parameters: %A -> Fitnesse: %f" parameters fitnesse]
     ]
 
 type MyApp() =

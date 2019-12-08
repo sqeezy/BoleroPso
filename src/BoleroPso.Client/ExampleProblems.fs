@@ -55,8 +55,8 @@ let xSquaredYSquaredZSquaredProblem =
 
 let exampleProblems = 
     [
-        oneDimPolynoma
         xSquaredProblem
+        oneDimPolynoma
         xSquaredYSquaredProblem
         xSquaredYSquaredZSquaredProblem
     ]
