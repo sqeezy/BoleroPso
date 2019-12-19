@@ -10,20 +10,45 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: dotnet publish -c Release -o $(Build.BinariesDirectory)
-  displayName: 'publish'
+jobs:
 
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+- job:
+  displayName: BuildAndPublish
+  steps:
+  
+  - script: dotnet publish -c Release -o $(Build.BinariesDirectory)
+    displayName: 'publish'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'publish'
-    publishLocation: 'Container'
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(Build.BinariesDirectory)'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      replaceExistingArchive: true
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'publish'
+      publishLocation: 'Container'
+
+- job:
+  displayName: BuildAndPublishDocker
+  steps:
+  - task: Docker@2
+    displayName: Docker Login
+    inputs:
+      containerRegistry: 'Docker Hub Sqeezy'
+      command: 'login'
+  
+  - task: Docker@2
+    inputs:
+      containerRegistry: 'Docker Hub Sqeezy'
+      repository: 'sqeezy/bolero-pso'
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile'
+      tags: |
+        $(Build.BuildId)
+        latest
+  
