@@ -36,6 +36,13 @@ jobs:
 - job:
   displayName: BuildAndPublishDocker
   steps:
+  - task: PowerShell@2
+    displayName: Get Version for Docker Image
+    inputs:
+      targetType: 'inline'
+      script: |
+        dotnet tool install --tool-path . nbgv
+        "##vso[task.setvariable variable=Version]$(.\nbgv get-version -v version)"
   - task: Docker@2
     displayName: Docker Login
     inputs:
@@ -49,6 +56,6 @@ jobs:
       command: 'buildAndPush'
       Dockerfile: '**/Dockerfile'
       tags: |
-        $(Build.BuildNumber)
+        $Version
         latest
   
