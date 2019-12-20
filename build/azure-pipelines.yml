@@ -49,6 +49,6 @@ jobs:
       command: 'buildAndPush'
       Dockerfile: '**/Dockerfile'
       tags: |
-        $(Build.SourceVersionMessage)
+        $(Build.BuildNumber)
         latest
   
