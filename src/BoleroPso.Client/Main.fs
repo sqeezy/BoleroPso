@@ -26,7 +26,7 @@ type Message =
     | SelectProblem of OptimizationProblem
     | StartOptimization
 
-let log s1 s2 = ()
+let log s1 s2 = printfn "%s - %s" s1 s2
 
 let testProblem problem =
     let config = {MaxIterations=1000}
