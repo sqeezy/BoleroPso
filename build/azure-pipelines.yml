@@ -7,13 +7,14 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
 
 jobs:
 
+
 - job:
   displayName: BuildAndPublish
+  pool:
+    vmImage: 'ubuntu-latest'
   steps:
   
   - script: dotnet publish -c Release -o $(Build.BinariesDirectory)
@@ -35,6 +36,8 @@ jobs:
 
 - job:
   displayName: BuildAndPublishDocker
+  pool:
+    vmImage: 'ubuntu-latest'
   steps:
   - task: PowerShell@2
     displayName: Get Version for Docker Image
