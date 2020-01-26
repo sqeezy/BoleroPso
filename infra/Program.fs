@@ -28,7 +28,7 @@ let infra () =
                       ]
 
     let siteConfig =
-        AppServiceSiteConfigArgs(AlwaysOn = input true,
+        AppServiceSiteConfigArgs(AlwaysOn = input false,
                                  LinuxFxVersion = input (sprintf "DOCKER|%s" image))
 
     let app =
