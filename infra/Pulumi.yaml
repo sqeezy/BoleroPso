@@ -1,0 +1,3 @@
+name: BoleroPso
+runtime: dotnet
+description: Particle Swarm Optimizer running on FsBolero
