@@ -7,9 +7,9 @@
 job("Run shell script") {
     container(displayName = "Build", image = "mcr.microsoft.com/dotnet/sdk:6.0") {
         shellScript {
-            interpreter = "/bin/pwsh"
+            interpreter = "/bin/bash"
             content = """
-                .\build.ps1
+                dotnet publish -c Release
             """
         }
     }
