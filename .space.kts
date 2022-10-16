@@ -5,7 +5,7 @@
 */
 
 job("Run shell script") {
-    container(displayName = "Build", image = "mcr.microsoft.com/dotnet/sdk:6.0") {
+    container(displayName = "Build", image = "mcr.microsoft.com/dotnet/sdk:6.0-windowsservercore-ltsc2022") {
         shellScript {
             interpreter = "/bin/bash"
             content = """
